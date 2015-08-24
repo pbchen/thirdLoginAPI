@@ -1,0 +1,27 @@
+<?php
+$open_denglu=array(
+ 'APPID' => '69948denMVMoBujYGLSFGUHbkvP7E3',
+        'APPKEY' => '77196994ZhSCDzjzE7Fyu2QFJ0ebX6',
+        'sign_type'=>'MD5',
+        'version'=>'1.0',
+        'get_userinfo'=>'http://denglu.soquair.com/user/get',
+);
+
+$arr = array('appid' => $open_denglu['APPID'], 'token' => $token, 'timestamp' => time() * 1000,
+            'version' => $open_denglu['version'], 'sign_type' => $open_denglu['sign_type']);
+        ksort($arr);
+        $param = '';
+        $concat = '';
+        $signp = '';
+        foreach ($arr as $key => $value) {
+            $param = $param . $concat . $key . '=' . urlencode($value);
+            $signp = $signp . $key . '=' . urlencode($value);
+            $concat = '&';
+        }
+        $sign = md5($signp . $open_denglu['APPKEY']);
+        $url = strpos($open_denglu['get_userinfo'], '?') === false ? $open_denglu['get_userinfo'] . '?' : $open_denglu['get_userinfo'];
+        $url = $url . $param . "&sign={$sign}";
+//        echo $url;
+        $user = file_get_contents($url);
+        echo $user;
+?>

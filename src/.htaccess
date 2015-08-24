@@ -1,0 +1,8 @@
+RewriteEngine On
+<FilesMatch ".(ini)$"> 
+Order Allow,Deny 
+Deny from all 
+</FilesMatch> 
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* index.php
